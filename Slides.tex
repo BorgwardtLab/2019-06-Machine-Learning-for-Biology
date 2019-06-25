@@ -1,0 +1,207 @@
+%!TEX TS-program = xelatex
+%!TEX encoding   = UTF-8 Unicode
+
+\documentclass[aspectratio=169]{beamer}
+
+\usefonttheme{default}
+\usefonttheme{professionalfonts}
+
+\usepackage{booktabs}
+\usepackage{dsfont}
+\usepackage{fontspec}
+\usepackage{multirow}
+\usepackage{mathpazo}
+\usepackage{manfnt}
+\usepackage{pifont}
+\usepackage{siunitx}
+\usepackage{xspace}
+
+\usepackage{appendixnumberbeamer}
+
+\usepackage[T1]{fontenc}
+
+\sisetup{
+  detect-weight           = true,
+  detect-inline-weight    = math,
+  separate-uncertainty    = true,
+  table-align-uncertainty = true,
+  table-text-alignment    = center,
+}
+
+\defaultfontfeatures{
+    Ligatures = TeX, % Ensures that dashes etc. are typeset properly
+    %Numbers   = {%
+    %  Monospaced,    % Always use monospaced numbers
+    %  Lining         % Always use lining numbers
+    %},
+}
+
+\usepackage[british]{babel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mathematics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Use bold font to indicate vectors
+\let\vec\mathbf
+
+\newcommand{\betti}        [1]{\ensuremath{\beta_{#1}}}
+\newcommand{\diagram}         {\ensuremath{\mathcal{D}}}
+\newcommand{\featurevector}[1]{\ensuremath{\mathcal{F}_{#1}}}
+\newcommand{\graph}           {\ensuremath{\mathcal{G}}}
+\newcommand{\landau}       [1]{\ensuremath{\mathcal{O}\left(#1\right)}}
+\newcommand{\real}            {\ensuremath{\mathds{R}}}
+
+\DeclareMathOperator{\ccount}     {\mathfrak{z}} % persistent cycle counter function
+\DeclareMathOperator{\dist}       {dist}         % distance functor
+\DeclareMathOperator{\flabel}     {l}            % label function
+\DeclareMathOperator{\pcount}     {\mathfrak{p}} % persistent counter function
+\DeclareMathOperator{\persistence}{pers}         % persistence function
+
+\let\originalleft\left
+\let\originalright\right
+\renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
+\renewcommand{\right}{\aftergroup\egroup\originalright}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plots & graphics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[absolute,overlay]{textpos}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\usetikzlibrary{backgrounds}  % to draw on the background
+\usetikzlibrary{shadows}      % shadows
+\usetikzlibrary{shadows.blur} % blurred shadows
+\usetikzlibrary{positioning}  % proper node positioning
+
+\pgfplotsset{compat=1.16}
+
+\definecolor{cardinal} {RGB}{196, 30, 58}
+\definecolor{lightgrey}{RGB}{230,230,230}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theming
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setsansfont{Myriad Pro}
+\setmonofont{Hack}
+
+\setbeamercolor{alerted text}           {fg=cardinal      }
+\setbeamercolor{bibliography entry note}{fg=black         }
+\setbeamercolor{structure}              {fg=black,bg=white}
+\setbeamercolor{normal text}            {fg=black,bg=white}
+\setbeamercolor{frametitle}             {fg=black,bg=white}
+\setbeamercolor{item projected}         {fg=black,bg=white}
+\setbeamercolor{footline colour}        {fg=black,bg=white}
+
+\setbeamertemplate{caption}                         {\insertcaption}
+\setbeamertemplate{itemize items}[circle]
+
+% Workaround for text bullets that are too large. I do not know their
+% root cause.
+\setbeamertemplate{itemize items}{%
+  \textbullet
+}
+
+\setbeamertemplate{enumerate items}   [square]
+\setbeamertemplate{navigation symbols}              {}
+
+%\setbeamerfont{title}     {family=\fontspec{Libre Franklin Bold}}
+%\setbeamerfont{frametitle}{family=\fontspec{Libre Franklin Bold}}
+%\setbeamerfont{author}    {family=\fontspec{Libre Franklin Bold}}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.075\paperwidth, ht=2.5ex, dp=2ex, left]{footline colour}%
+      \hspace*{2.5mm}\includegraphics[height=1.5ex]{Figures/Logo_D-BSSE}%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.925\paperwidth, ht=2.5ex, dp=2ex, right]{footline colour}%
+      \usebeamerfont{title in head/foot}\insertshorttitle%
+      \hspace*{3.14mm}%
+      \usebeamerfont{author in head/foot}\insertshortauthor%
+      \hspace*{3.14mm}\insertdate%
+      \hspace*{4.5mm}%
+      % TODO: Do I want this?
+      %\hspace*{3.14mm}\makebox[2em][r]{\insertframenumber/\inserttotalframenumber}\hspace*{4.5mm}%
+    \end{beamercolorbox}%
+  }
+}
+
+% Disable rules for footnotes; this makes the display less cluttered in my opinion.
+\renewcommand{\footnoterule}{}
+
+% Title page
+%\defbeamertemplate*{title page}{customized}[1][]
+%{
+%  \usebeamerfont{title}\inserttitle\par
+%  \small\usebeamerfont{author}\insertauthor
+%  \vfill
+%  \begin{center}
+%    \includegraphics[height=2cm]{Figures/Logo_ETH}
+%    \includegraphics[height=2cm]{Figures/Logo_MLCB}
+%  \end{center}
+%}
+
+\makeatletter
+\addtobeamertemplate{block begin}{
+\def\@listi{\leftmargin\leftmargini
+              \topsep    0pt
+              \parsep    0pt
+              \itemsep   3pt plus 2pt minus 3pt}
+\partopsep 0pt
+}
+\makeatother
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Algorithms
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Typography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\th}{\textsuperscript{\textup{th}}\xspace}
+
+\newcommand{\yes}{\textcolor{eth-4}{\ding{51}}}
+\newcommand{\no} {\textcolor{eth-7}{\ding{55}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Machine Learning for Biology}
+\subtitle{Clustering Methods}
+\author{Bastian Rieck}
+\institute{%
+}
+\date{28 June 2019}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Slides
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+  \begin{frame}[noframenumbering, plain]
+    \titlepage
+  \end{frame}
+
+\end{document}
