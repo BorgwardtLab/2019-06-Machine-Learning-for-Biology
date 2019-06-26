@@ -292,8 +292,8 @@
   \begin{frame}{A zoo of clustering methods}
     \begin{itemize}
       \item Hierarchical clustering~(agglomerative, divisive, \dots)
-      \item Density-based clustering~(\texttt{DBSCAN}, \texttt{DENCLUE})
       \item \texttt{$k$-means}
+      \item Density-based clustering~(\texttt{DBSCAN}, \texttt{DENCLUE})
     \end{itemize}
   \end{frame}
 
@@ -424,5 +424,21 @@
         \end{groupplot}
       \end{tikzpicture}
     \end{figure}
+  \end{frame}
+
+  \begin{frame}{Similarity measures}
+    \begin{center}
+      \begin{tabular}{ll}
+        \toprule
+        \emph{Which metric should I use for}\dots? & \\
+        \midrule
+        Continuous data~({\small temperature, length, \dots}) & Euclidean distance, Mahalanobis distance\\
+        Categorical data~({\small blood type, sex, \dots})    & Hamming distance\\
+        Images                                                & Euclidean distance~(?)\\
+        Graphs                                                & Weisfeiler--Lehman graph kernels\\
+        Time series                                           & Dynamic time warping~(DTW)\\
+        \bottomrule
+      \end{tabular}
+    \end{center}
   \end{frame}
 \end{document}
