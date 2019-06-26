@@ -441,4 +441,17 @@
       \end{tabular}
     \end{center}
   \end{frame}
+
+  \begin{frame}{How to choose $k$?}
+    \begin{itemize}
+      \item \emph{$\beta$-CV}: ratio of mean intracluster distance to mean intercluster distance
+      \item \emph{C index}: ratio of intracluster distances to sum of the largest distances between points
+      \item \emph{Dunn index}: ratio of smallest distance between points in different clusters to largest diameter of a cluster
+      \item \emph{Silhouette score}: ensures that clusters are \emph{cohesive} while also being \emph{separate}
+    \end{itemize}
+    %
+    \vfill
+    %
+    All of these measures have their shortcomings, though.
+  \end{frame}
 \end{document}
