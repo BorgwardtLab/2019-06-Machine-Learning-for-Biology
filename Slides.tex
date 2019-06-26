@@ -1,4 +1,4 @@
-%!TEX TS-program = xelatex
+%!TEX TS-program = lualatex
 %!TEX encoding   = UTF-8 Unicode
 
 \documentclass[aspectratio=169]{beamer}
@@ -75,15 +75,20 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 
-\usetikzlibrary{backgrounds}  % to draw on the background
-\usetikzlibrary{shadows}      % shadows
-\usetikzlibrary{shadows.blur} % blurred shadows
-\usetikzlibrary{positioning}  % proper node positioning
+\usepgfplotslibrary{external}
+\usepgfplotslibrary{groupplots}
+
+\tikzexternalize
+\tikzsetexternalprefix{Figures/External/}
 
 \pgfplotsset{compat=1.16}
 
 \definecolor{cardinal} {RGB}{196, 30, 58}
 \definecolor{lightgrey}{RGB}{230,230,230}
+
+\pgfplotsset{%
+  /pgfplots/colormap={mlcb}{rgb255=(196,30,58) rgb255=(80,200,120) rgb255=(49,140,231) rgb255=(244,196,48)}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Theming
@@ -200,10 +205,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-  \begin{frame}[noframenumbering, plain]
-    \titlepage
-  \end{frame}
-
   \begin{frame}{What is clustering?}
 
     \begin{block}{Problem definition}
@@ -256,4 +257,172 @@
     \end{columns}
   \end{frame}
 
+  \begin{frame}{}
+    \begin{center}
+      \begin{huge}
+        There is no \emph{best} clustering.
+      \end{huge}
+    \end{center}
+  \end{frame}
+
+  \begin{frame}{Clustering by colour~($k = 4$)}
+    \begin{figure}
+      \includegraphics[width=0.75\linewidth]{Figures/Clustering_by_colour}
+    \end{figure}
+  \end{frame}
+
+  \begin{frame}{Clustering by type~($k = 4)$}
+    \begin{figure}
+      \includegraphics[width=0.75\linewidth]{Figures/Clustering_by_type}
+    \end{figure}
+  \end{frame}
+
+  \begin{frame}{Clustering by topology~($k = 2)$}
+    \begin{figure}
+      \includegraphics[width=0.75\linewidth]{Figures/Clustering_by_topology}
+    \end{figure}
+  \end{frame}
+
+  \begin{frame}{Clustering by ingredients~($k = 2)$}
+    \begin{figure}
+      \includegraphics[width=0.75\linewidth]{Figures/Clustering_by_ingredients}
+    \end{figure}
+  \end{frame}
+
+  \begin{frame}{A zoo of clustering methods}
+    \begin{itemize}
+      \item Hierarchical clustering~(agglomerative, divisive, \dots)
+      \item Density-based clustering~(\texttt{DBSCAN}, \texttt{DENCLUE})
+      \item \texttt{$k$-means}
+    \end{itemize}
+  \end{frame}
+
+
+  \begin{frame}
+    \begin{figure}
+      \begin{tikzpicture}
+        \tikzset{%
+          every mark/.append style = {
+            mark size = 0.35pt,
+          }
+        }
+        %
+        \pgfplotsset{%
+          /pgfplots/scatter/use mapped color = {
+            draw = mapped color,
+            fill = mapped color,
+          }
+        }
+        %
+        \begin{groupplot}[%
+          group style = {%
+            group size     = 3 by 4,
+            horizontal sep = 0pt,
+            vertical sep   = 0pt,
+          },
+          %
+          axis lines = none,
+          clip mode  = individual,
+          height     = 3.5cm,
+          width      = 3.5cm,
+        ]
+          \nextgroupplot
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/AgglomerativeClustering_0.txt};
+            \node at (rel axis cs:0.5,1.05) {\small Agglomerative};
+
+          \nextgroupplot
+
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/MiniBatchKMeans_0.txt};
+            \node at (rel axis cs:0.5,1.10) {\small\texttt{$k$-means}};
+
+          \nextgroupplot
+
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/DBSCAN_0.txt};
+            \node at (rel axis cs:0.5,1.10) {\small\texttt{DBSCAN}};
+
+          \nextgroupplot
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/AgglomerativeClustering_1.txt};
+
+          \nextgroupplot
+
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/MiniBatchKMeans_1.txt};
+
+          \nextgroupplot
+
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/DBSCAN_1.txt};
+
+          \nextgroupplot
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/AgglomerativeClustering_2.txt};
+
+          \nextgroupplot
+
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/MiniBatchKMeans_2.txt};
+
+          \nextgroupplot
+
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/DBSCAN_2.txt};
+
+          \nextgroupplot
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/AgglomerativeClustering_5.txt};
+
+          \nextgroupplot
+
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/MiniBatchKMeans_5.txt};
+
+          \nextgroupplot
+
+            \addplot[%
+              scatter,
+              only marks,
+              point meta=explicit
+            ] table[meta index=2] {Data/DBSCAN_5.txt};
+
+        \end{groupplot}
+      \end{tikzpicture}
+    \end{figure}
+  \end{frame}
 \end{document}
