@@ -130,29 +130,14 @@
     \begin{beamercolorbox}[wd=.925\paperwidth, ht=2.5ex, dp=2ex, right]{footline colour}%
       \usebeamerfont{title in head/foot}\insertshorttitle%
       \hspace*{3.14mm}%
-      \usebeamerfont{author in head/foot}\insertshortauthor%
       \hspace*{3.14mm}\insertdate%
       \hspace*{4.5mm}%
-      % TODO: Do I want this?
-      %\hspace*{3.14mm}\makebox[2em][r]{\insertframenumber/\inserttotalframenumber}\hspace*{4.5mm}%
     \end{beamercolorbox}%
   }
 }
 
 % Disable rules for footnotes; this makes the display less cluttered in my opinion.
 \renewcommand{\footnoterule}{}
-
-% Title page
-%\defbeamertemplate*{title page}{customized}[1][]
-%{
-%  \usebeamerfont{title}\inserttitle\par
-%  \small\usebeamerfont{author}\insertauthor
-%  \vfill
-%  \begin{center}
-%    \includegraphics[height=2cm]{Figures/Logo_ETH}
-%    \includegraphics[height=2cm]{Figures/Logo_MLCB}
-%  \end{center}
-%}
 
 \makeatletter
 \addtobeamertemplate{block begin}{
@@ -194,10 +179,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{Machine Learning for Biology}
-\subtitle{Clustering Methods}
-\author{Bastian Rieck}
-\institute{%
-}
 \date{28 June 2019}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
