@@ -102,7 +102,7 @@
 \setbeamercolor{structure}              {fg=black,bg=white}
 \setbeamercolor{normal text}            {fg=black,bg=white}
 \setbeamercolor{frametitle}             {fg=black,bg=white}
-\setbeamercolor{item projected}         {fg=black,bg=white}
+\setbeamercolor{item projected}         {fg=white,bg=black}
 \setbeamercolor{footline colour}        {fg=black,bg=white}
 
 \setbeamertemplate{caption}                         {\insertcaption}
@@ -437,4 +437,50 @@
     ``tricked''. Ideally, ground truth information is available to
     verify a clustering.
   \end{frame}
+
+  \begin{frame}{Myths in machine learning}
+    \begin{enumerate}
+      \item Machine learning does not need a clear objective.
+      \item Machine learning does not need a clear hypothesis.
+      \item Machine learning can extract the \emph{right} signal from your data.
+    \end{enumerate}
+  \end{frame}
+
+  \begin{frame}
+    \begin{block}{Machine learning needs clear objectives}
+      Prior to applying any machine learning algorithm, you should have
+      a clear objective in mind. Do you want to cluster data to learn
+      about~(unknown) structures? Do you need to classify \emph{unseen}
+      data in order to save valuable working time?
+    \end{block}
+    %
+    \vfill
+    %
+    What should an ``ideal'' algorithm do for \emph{your} project?
+  \end{frame}
+
+  \begin{frame}
+    \begin{block}{Machine learning needs a hypothesis}
+      Decide beforehand what you are looking for in your data. Do you
+      hypothesise that a certain biomarker might exist in your data that
+      is correlated with a phenotype? Do you hypothesise that there are
+      subgroups of subjects of your study that give rise to similar
+      behaviour?
+    \end{block}
+    %
+    \vfill
+    %
+    The results of a machine learning algorithm should be able to
+    surprise you~(because a hypothesis has been disproved).
+  \end{frame}
+
+  \begin{frame}
+    \begin{block}{Machine learning cannot extract something from nothing}
+      If your data are very ``noisy'', the real signal might be
+      hidden---and in the worst case, an algorithm might be unable to
+      find it. Larger data sets might lead to better performance, but
+      only if the data are properly curated.
+    \end{block}
+  \end{frame}
+
 \end{document}
