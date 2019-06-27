@@ -14,7 +14,12 @@
 \usepackage{manfnt}
 \usepackage{pifont}
 \usepackage{siunitx}
+\usepackage{tabularx}
+\usepackage{subcaption}
 \usepackage{xspace}
+
+% Define new column type in tabularx environment, that combines the X-cell with the c-cell
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
 
 \usepackage{appendixnumberbeamer}
 
@@ -152,8 +157,14 @@
 \AtBeginSection[]
 {
   \begin{frame}<beamer>
-    \frametitle{Outline}
-    \tableofcontents[currentsection]
+    \vfill
+    \begin{center}
+      \usebeamerfont{title}%
+      \begin{huge}
+        \insertsectionhead%
+      \end{huge}
+    \end{center}
+    \vfill
   \end{frame}
 }
 
@@ -174,11 +185,24 @@
 \newcommand{\yes}{\textcolor{eth-4}{\ding{51}}}
 \newcommand{\no} {\textcolor{eth-7}{\ding{55}}}
 
+\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip1em
+  \hbox{}\nobreak\hfill #1%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+\newsavebox\mybox
+\newenvironment{aquote}[1]
+  {\savebox\mybox{\scriptsize#1}``\hspace*{-.25ex}}
+  {\unskip''\vspace*{1mm}\signed{\usebox\mybox}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{Machine Learning for Biology}
+\subtitle{Workshop, D-BSSE Retreat}
+\author{%
+  Anja Gumpinger \and Catherine Jutzeler \and Bastian Rieck \and Caroline Weis
+}
 \date{28 June 2019}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -186,6 +210,96 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
+
+  \begin{frame}[plain]
+    \maketitle
+  \end{frame}
+
+  \begin{frame}{Machine leaning and candy}{A good fit}
+    \begin{figure}
+      \includegraphics[width=0.50\linewidth]{Figures/Introduction}
+    \end{figure}
+  \end{frame}
+  
+  \section{What is machine learning?}
+
+  \begin{frame}{Group work 1}
+    \begin{itemize}
+        \item What is machine learning?
+        \item Which machine learning techniques do you already know?
+    \end{itemize}
+    %
+    \vfill
+    %
+    \textbf{Instructions}: please discuss the questions above within
+    your group. Use the provided pens and sheets to write down your
+    answers.~($\approx\SI{5}{\minute}$)
+  \end{frame}
+
+  \begin{frame}{Machine learning~(ML)}
+    \begin{aquote}{Arthur Samuel, Computer Scientist, 1959}
+      Machine learning is the field of study that gives the computer the
+      \emph{ability to learn without being explicitly programmed}.
+    \end{aquote}
+    %
+    \pause
+    \vfill
+    %
+    \begin{aquote}{Tom Mitchell, Computer Scientist, 1997}
+      A computer program is said to \emph{learn from Experience E} with respect
+      to some \emph{class of Task T} and some \emph{performance measure
+      P}, if its performance on T, as measured by P, improves with \emph{Experience
+      E}.
+    \end{aquote}
+  \end{frame}
+
+  \begin{frame}{Everyday applications of machine learning}
+    \begin{columns}
+      \column{0.25\linewidth}
+        \onslide<1->{%
+          \begin{figure}
+            \includegraphics[width=\linewidth]{Figures/Netflix}
+            \caption{\scriptsize Personalised entertainment recommendations}
+          \end{figure}
+        }
+      \column{0.25\linewidth}
+        \onslide<2->{%
+          \begin{figure}
+            \includegraphics[width=\linewidth]{Figures/Facebook}
+            \caption{\scriptsize Personalised contact recommendations}
+          \end{figure}
+        }
+      \column{0.25\linewidth}
+        \onslide<3->{%
+          \begin{figure}
+            \includegraphics[width=\linewidth]{Figures/Shazaam}
+            \caption{\scriptsize Music recognition}
+          \end{figure}
+        }
+      \column{0.25\linewidth}
+        \onslide<4->{%
+          \begin{figure}
+            \includegraphics[width=\linewidth]{Figures/Google}
+            \caption{\scriptsize Traffic prediction}
+          \end{figure}
+        }
+    \end{columns}
+  \end{frame}
+
+  \begin{frame}{A bestiary for machine learning}
+    \begin{figure}
+      \includegraphics[width=0.75\linewidth]{Figures/Zoo}
+    \end{figure}
+  \end{frame}
+
+  \begin{frame}{}
+    \begin{figure}
+      \includegraphics[width=0.75\linewidth]{Figures/Machine_learning_pipeline}
+    \end{figure}
+  \end{frame}
+
+  \section{Clustering methods}
+
   \begin{frame}{What is clustering?}
 
     \begin{block}{Problem definition}
@@ -446,6 +560,134 @@
     verify a clustering.
   \end{frame}
 
+  \section{Classification methods}
+
+\begin{frame}{Classification}
+    \textbf{Problem}:
+    \newline
+    Identify a new object based on previously seen objects of similar type.
+    \newline\newline
+    \noindent
+    \textbf{Properties}:
+    \begin{itemize}
+        \item instance of \textit{supervised} machine learning, i.e. requires \textit{labels} for data points
+        \item requires \textit{training}, i.e. presentation of examples to an algorithm
+        \item \textit{prediction}, i.e. the prediction of the label for previously unseen data points
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Classification - Concept: Training}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{figures/example_training.pdf}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Classification - Concept: Prediction}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{figures/example_prediction.pdf}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}{Classification - Data Representation}
+    \scriptsize
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            \centering
+            \begin{tabularx}{0.8\textwidth}{@{}c|Y|Y|Y|Y@{}}
+                \toprule
+                    & \textbf{color} & \textbf{size [cm]} & \textbf{weight [g]} & \textbf{chocolate}  \\
+                \midrule
+                \parbox[c]{1em}{\includegraphics[width=0.0175\textwidth]{figures/023-gummy-bear-0.pdf}} & red & 2.02 & 1.99 & 0   \\
+                \midrule
+                 \parbox[c]{1em}{\includegraphics[width=0.0175\textwidth]{figures/023-gummy-bear-1.pdf}} & green & 1.98  & 2.10 & 0   \\
+                \midrule
+                \parbox[c]{1em}{\includegraphics[width=0.0175\textwidth]{figures/028-ice-cream-2.pdf}} & yellow & 14.20  & 56.15 & 1  \\
+                \midrule
+                \parbox[c]{1em}{\includegraphics[width=0.0175\textwidth]{figures/041-candy-3.pdf}} & blue & 2.45  & 4.30 & 0   \\
+                \midrule
+                \parbox[c]{1em}{\includegraphics[width=0.0175\textwidth]{figures/041-candy-1.pdf}} & green & 2.49  & 4.17 & 0  \\
+                \midrule
+                \multicolumn{5}{c}{$\vdots$}  \\
+                \midrule
+                \parbox[c]{1em}{\includegraphics[width=0.0175\textwidth]{figures/028-ice-cream-3.pdf}} & blue & 14.20  & 56.15 & 1 \\
+                \midrule
+                \parbox[c]{1em}{\includegraphics[width=0.0175\textwidth]{figures/046-donuts-2.pdf}} & yellow & 16.80  & 110.30 & 1  \\
+                \bottomrule
+            \end{tabularx}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{tabular}{c}
+                \toprule
+                \textbf{label}  \\
+                \midrule
+                Gummy Bear   \\
+                \midrule
+                 Gummy Bear   \\
+                \midrule
+                Ice Cream   \\
+                \midrule
+                Candy   \\
+                \midrule
+                Candy   \\
+                \midrule
+                $\vdots$  \\
+                \midrule
+                Ice Cream   \\
+                \midrule
+                 Doughnut   \\
+                \bottomrule
+            \end{tabular}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}{Classification: Nearest Neighbor Classifiers}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/example_kNN.pdf}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Classification: Decision Tree Example}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/example_decision_tree.pdf}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Famous Classification Methods}
+    \begin{itemize}
+        \item Logistic Regression
+        \item k-nearest Neighbor Classification (\textit{k}-NN)
+        \item Naïve Bayes
+        \item Support Vector Machines (SVM)
+        \item Decision Trees and Random Forests
+        \item Neural Networks
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Classification vs. Regression}
+    \begin{itemize}
+        \item Very similar concepts and methods
+        \item Instead of predicting a discrete \textit{class label} for
+          each sample, predict a measurable \textit{continuous quantity}
+    \end{itemize}
+    \vspace{0.5cm}
+    \textbf{Candy Regression}\newline
+    The target to predict could become e.g.
+    \begin{itemize}
+        \item sugar content of a sweet
+        \item calories
+        \item ...
+    \end{itemize}
+\end{frame}
+
+  \section{Common myths in machine learning}
+
   \begin{frame}{Myths in machine learning}
     \begin{enumerate}
       \item Machine learning does not need a clear objective.
@@ -495,5 +737,50 @@
     %
     \textbf{Take-away}: Be aware of inconsistencies in your data.
   \end{frame}
+
+
+
+\begin{frame}{Group Work 3: Discussion of individual projects (45min)}
+    
+    \textbf{Instructions:}
+    \small
+    \begin{itemize}
+        \item What does your data look like (time series, images, genetic data, ...)?
+        \item How large is the data set (number of samples/features)?
+        \item Are there any pitfalls (high noise, missing data, incorrect measurements, ...)?
+        \item What would you like to learn? What is the question you want to answer?
+        \item Are you dealing with a clustering/classification/regression problem? What is your target variable?
+        \item Can your question be answered with your current data set? If not, how would the data set have to be changed to answer the question (larger data set?        different experiments, ...)?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Question-Answer-Session}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.3]{figures/question_answer.eps}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Machine Learning Resources}
+    \scriptsize
+    Online Resources:
+    \begin{itemize}
+        \item python's \texttt{scikit-learn} package plus documentation (hands-on ML techniques with examples)
+        \item ML-lecture by A. Ng: https://www.coursera.org/learn/machine-learning
+        \item \url{https://shapeofdata.wordpress.com}
+    \end{itemize}
+    \vspace{0.5cm}
+    Textbooks:
+    \begin{itemize}
+        \item \textit{Elements of Statistical Learning} by T. Hastie, R. Tibshirani, J. Friedmann
+        \item \textit{Machine Learning: a Probabilistic Perspective} by K. Murphy
+        \item \textit{Understanding Machine Learning: From Theory to Algorithms} by S. Shalev-Shwartz, S. Ben-David
+        \item \textit{Data Mining and Analysis: Fundamental Concepts and Algorithms} by  M.J. Zaki and W. Meira Jr.
+        \item \textit{Data Mining: The Textbook} by C.C. Aggarwal
+    \end{itemize}
+    \vspace{0.5cm}
+    \dots and of course: the Borgwardt-lab ;)
+\end{frame}
+
 
 \end{document}
