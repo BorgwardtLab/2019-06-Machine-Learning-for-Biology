@@ -10,3 +10,11 @@ background. This workshop was a part of the [D-BSSE Retreat
 
 Please note: some slides are reserved for group exercises, which are
 _not_ covered in the provided materials.
+
+## Contributors
+
+- [Anja Gumpinger](https://github.com/guanja)
+- [Caroline Weis](https://github.com/cvweis)
+- [Catherine Jutzeler](https://github.com/jutzca)
+- [Bastian Rieck](https://github.com/Pseudomanifold)
+
